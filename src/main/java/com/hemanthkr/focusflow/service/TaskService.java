@@ -8,22 +8,21 @@ import com.hemanthkr.focusflow.dto.TaskRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TaskService {
 
     private final TaskRepository taskRepository;
 
-    public TaskService(TaskRepository taskRepository){
+    public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
 
-    public List<Task> getAllTasks(){
+    public List<Task> getAllTasks() {
         return taskRepository.findAll();
     }
 
-    public Task createTask(TaskRequest request){
+    public Task createTask(TaskRequest request) {
 
         Task task = new Task();
 
@@ -35,10 +34,29 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    public Task getTaskById(Long id){
-        
+    public Task getTaskById(Long id) {
+
         return taskRepository.findById(id)
-        .orElseThrow(() -> new TaskNotFoundException(id));
+                .orElseThrow(() -> new TaskNotFoundException(id));
     }
+
+    public Task updateTask(Long id, TaskRequest request) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new TaskNotFoundException(id));
+
+        task.setTitle(request.getTitle());
+        task.setTaskDate(request.getTaskDate());
+        task.setWeight(request.getWeight());
+
+        return taskRepository.save(task);
+
+    }
+
+    public void deleteTask(Long id) {
+    Task task = taskRepository.findById(id)
+            .orElseThrow(() -> new TaskNotFoundException(id));
+
+    taskRepository.delete(task);
+}
 
 }
