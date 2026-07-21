@@ -172,7 +172,7 @@ Create the following system environment variables.
 ### Windows (PowerShell)
 
 ```powershell
-setx DB_URL "jdbc:postgresql://localhost:5432/FraudDetectionDB"
+setx DB_URL "jdbc:postgresql://localhost:5432/focuflow"
 setx DB_USERNAME "postgres"
 setx DB_PASSWORD "your_password"
 ```
