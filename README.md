@@ -1,25 +1,25 @@
 # FocusFlow
 
-> A modern productivity and task management application built with **Spring Boot** and **PostgreSQL**, designed to help users organize tasks, track productivity, and learn backend engineering through real-world development.
+> A modern productivity and task management backend built with **Spring Boot** and **PostgreSQL**, designed to help users organize tasks while learning real-world backend engineering.
 
 > 🚧 **Project Status:** Under Active Development  
-> **Current Version:** `v0.3.0`
+> **Current Version:** `v0.4.0`
 
 ---
 
 # 📖 About
 
-FocusFlow is a backend-driven productivity tracker that allows users to create, manage, update, and organize daily tasks.
+FocusFlow is a RESTful backend application that allows users to create, manage, update, and organize daily tasks.
 
-This project is being built from scratch while learning **Spring Boot**, **REST APIs**, and **backend architecture** following industry best practices.
+This project is being built completely from scratch while learning modern backend development using **Spring Boot**, **Spring Data JPA**, and **PostgreSQL**.
 
-The goal is not only to build a productivity application but also to understand how production-grade backend systems are designed and implemented.
+The primary goal is not only to build a productivity tracker but also to understand how production-grade backend systems are designed using industry best practices.
 
 ---
 
 # 📚 Learning Highlights
 
-This project is being developed while learning modern backend development concepts.
+This project serves as both a productivity application and a backend engineering learning journey.
 
 ### Concepts Implemented
 
@@ -31,6 +31,8 @@ This project is being developed while learning modern backend development concep
 - Hibernate ORM
 - PostgreSQL Integration
 - DTO Pattern
+- Bean Validation (Jakarta Validation)
+- Request Validation using `@Valid`
 - Custom Exceptions
 - Global Exception Handling
 - Environment Variables
@@ -49,9 +51,13 @@ This project is being developed while learning modern backend development concep
 - ✅ RESTful API using Spring Boot
 - ✅ Layered Architecture (Controller → Service → Repository)
 - ✅ DTO-based request handling
+- ✅ Request validation using Bean Validation
+- ✅ Custom validation messages
 - ✅ Custom Exception (`TaskNotFoundException`)
-- ✅ Global Exception Handling (`@ControllerAdvice`)
+- ✅ Global Exception Handling (`@RestControllerAdvice`)
+- ✅ Global Validation Exception Handling
 - ✅ Proper HTTP 404 responses
+- ✅ Proper HTTP 400 responses
 - ✅ Automatic ID generation
 - ✅ Automatic task creation timestamp
 - ✅ Environment variable support for database credentials
@@ -60,9 +66,8 @@ This project is being developed while learning modern backend development concep
 
 # 🚀 Upcoming Features
 
-- ⬜ Mark task as completed
-- ⬜ Request Validation
 - ⬜ ResponseEntity
+- ⬜ Mark task as completed
 - ⬜ Task filtering
 - ⬜ Pagination
 - ⬜ Sorting
@@ -167,17 +172,15 @@ cd FocusFlow
 
 ## Configure Environment Variables
 
-Create the following system environment variables.
-
 ### Windows (PowerShell)
 
 ```powershell
-setx DB_URL "jdbc:postgresql://localhost:5432/focuflow"
+setx DB_URL "jdbc:postgresql://localhost:5432/focusflow"
 setx DB_USERNAME "postgres"
 setx DB_PASSWORD "your_password"
 ```
 
-Restart your terminal after setting them.
+Restart your terminal after setting the environment variables.
 
 ---
 
@@ -187,7 +190,7 @@ Restart your terminal after setting them.
 ./mvnw spring-boot:run
 ```
 
-Application starts at:
+Application starts at
 
 ```
 http://localhost:8080
@@ -271,9 +274,9 @@ PUT /tasks/1
 
 ```json
 {
-    "title": "Study Spring Boot Update API",
-    "taskDate": "2026-07-21",
-    "weight": 95
+    "title": "Study Spring Boot Validation",
+    "taskDate": "2026-07-23",
+    "weight": 90
 }
 ```
 
@@ -282,10 +285,10 @@ PUT /tasks/1
 ```json
 {
     "id": 1,
-    "title": "Study Spring Boot Update API",
+    "title": "Study Spring Boot Validation",
     "completed": false,
-    "taskDate": "2026-07-21",
-    "weight": 95,
+    "taskDate": "2026-07-23",
+    "weight": 90,
     "createdAt": "2026-07-15T10:30:00"
 }
 ```
@@ -308,9 +311,9 @@ DELETE /tasks/1
 
 ---
 
-# ❌ Error Response
+# ❌ Error Responses
 
-If a task does not exist:
+## Task Not Found
 
 ```http
 GET /tasks/999
@@ -324,6 +327,36 @@ Response
 
 ```text
 Task with id 999 not found
+```
+
+---
+
+## Validation Error
+
+```http
+POST /tasks
+```
+
+```json
+{
+    "title": "",
+    "taskDate": null,
+    "weight": 101
+}
+```
+
+Response
+
+```http
+400 Bad Request
+```
+
+```json
+{
+    "title": "Title cannot be blank",
+    "taskDate": "Task date is required",
+    "weight": "Weight cannot exceed 100"
+}
 ```
 
 ---
@@ -344,9 +377,9 @@ Task with id 999 not found
 | Get Task By ID API | ✅ |
 | Update Task API | ✅ |
 | Delete Task API | ✅ |
+| Request Validation | ✅ |
 | Custom Exception | ✅ |
 | Global Exception Handling | ✅ |
-| Validation | ⏳ |
 | ResponseEntity | ⏳ |
 | Authentication | ⏳ |
 | React Frontend | ⏳ |
@@ -362,9 +395,9 @@ Task with id 999 not found
 - [x] Get Task By ID API
 - [x] Update Task API
 - [x] Delete Task API
+- [x] Request Validation
 - [x] Custom Exception Handling
 - [x] Global Exception Handling
-- [ ] Validation
 - [ ] ResponseEntity
 - [ ] Task Completion API
 - [ ] Pagination & Sorting
@@ -395,16 +428,17 @@ Computer Science Engineering Student
 
 **Backend Development • Java • Spring Boot • PostgreSQL**
 
-GitHub:
+GitHub
+
 https://github.com/hemanthkumara289
 
 ---
 
 # ⭐ Support
 
-If you found this project useful or interesting, consider giving it a ⭐ on GitHub.
+If you found this project useful, consider giving it a ⭐ on GitHub.
 
-Feedback, suggestions, and contributions are always welcome!
+Feedback, suggestions, and contributions are always welcome.
 
 ---
 
@@ -412,4 +446,4 @@ Feedback, suggestions, and contributions are always welcome!
 
 FocusFlow is actively under development.
 
-Every new feature is implemented while learning backend development concepts, making this repository both a productivity application and a backend engineering learning journey.
+Each feature is implemented while learning modern backend development concepts, making this repository both a productivity application and a documented learning journey into Spring Boot and backend engineering.

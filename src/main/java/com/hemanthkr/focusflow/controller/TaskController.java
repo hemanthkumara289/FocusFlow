@@ -2,6 +2,9 @@ package com.hemanthkr.focusflow.controller;
 
 import com.hemanthkr.focusflow.entity.Task;
 import com.hemanthkr.focusflow.service.TaskService;
+
+import jakarta.validation.Valid;
+
 import com.hemanthkr.focusflow.dto.TaskRequest;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,7 +34,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public Task createTask(@RequestBody TaskRequest request) {
+    public Task createTask(@Valid @RequestBody TaskRequest request) {
         return taskService.createTask(request);
     }
 
@@ -42,7 +45,7 @@ public class TaskController {
 
     @PutMapping("/{id}")
     public Task updateTask(@PathVariable Long id,
-            @RequestBody TaskRequest request) {
+            @Valid @RequestBody TaskRequest request) {
 
         return taskService.updateTask(id, request);
     }
